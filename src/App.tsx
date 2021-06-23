@@ -1,18 +1,24 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { AuthContextProvider } from './contexts/AuthContext';
 import { Home } from "./pages/Home";
 import { NewRoom } from "./pages/NewRoom";
+import { Room } from "./pages/Room";
 
 function App() {
   return (
     <BrowserRouter >
       <AuthContextProvider>
-        {/* Rota para Home page ou tela de autenticação */}
-        <Route path="/" exact component={Home}/>
+        <Switch>
+          {/* Rota para Home page ou tela de autenticação */}
+          <Route path="/" exact component={Home}/>
 
-        {/* Rota para tela de criar salas */}
-        <Route path="/room/new" component={NewRoom}/>
+          {/* Rota para tela de criar salas */}
+          <Route path="/rooms/new" component={NewRoom}/>
+
+          {/* Rota para a tela de sala */}
+          <Route path="/rooms/:id" component={Room}/>
+        </Switch>
       </AuthContextProvider>
     </BrowserRouter>
   );
