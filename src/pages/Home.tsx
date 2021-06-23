@@ -20,7 +20,7 @@ export function Home() {
       await signInWithGoogle();
     }
     
-    history.push('/room/new');
+    history.push('/rooms/new');
   }
 
   async function handleJoinRoom(event:FormEvent) {
