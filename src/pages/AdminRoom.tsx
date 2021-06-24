@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 
 import { useRoom } from "../hooks/useRoom";
 import { database } from "../services/firebase";
@@ -17,6 +17,7 @@ type RoomParams = {
 
 export function AdminRoom() {
   // const {user} = useAuth();
+  const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   
@@ -27,6 +28,14 @@ export function AdminRoom() {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
     }
   }
+
+  async function handleEndRoom() {
+    await database.ref(`rooms/${roomId}`).update({
+      endedAt: new Date(),
+    });
+    
+    history.push('/');
+  }
   
   return (
     <div id="page-room">
@@ -35,7 +44,7 @@ export function AdminRoom() {
           <img src={logoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined>Encerrar aula</Button>
+            <Button isOutlined onClick={handleEndRoom}>Encerrar aula</Button>
           </div>
         </div>
       </header>
